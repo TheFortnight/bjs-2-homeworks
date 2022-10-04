@@ -15,6 +15,15 @@ function solveEquation(a,b,c) {
 
 function calculateTotalMortgage(percent, contribution, amount, date) {
   let totalAmount;
+   if(isNaN(percent)) {
+    return totalAmount = `Параметр "Процентная ставка" содержит неправильное значение "${percent}"`
+   }
+   else if(isNaN(contribution)){
+    return totalAmount = `Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`
+   }
+   else if(isNaN(amount)){
+    return totalAmount = `Параметр "Общая стоимость" содержит неправильное значение "${amount}"`
+   }
   let credAmount = amount - contribution;
   let period = date - new Date();
   //console.log(period);
@@ -24,14 +33,15 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
     alert("минимальный период кредита - 1 мес. Укажите правильную дату");
     return;
   }
-    else {
+    
+  
   percent = percent / 100;
   let P = percent / 12;
   let payment = credAmount * (P + (P / (((1 + P)**month) - 1)));
   totalAmount = payment * month;
-  totalAmount = (totalAmount).toFixed(2);
+  totalAmount = +(totalAmount).toFixed(2);
   console.log(totalAmount + typeof(totalAmount));
-    }
+  
 
 
   // код для задачи №2 писать здесь
