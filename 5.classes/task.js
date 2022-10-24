@@ -88,7 +88,7 @@ class Library {
         let search = this.findBookBy("name", bookName);
         let giveBook = null;
         if (search != null) {
-            giveBook = this.books.splice(this.books.indexOf(search)-1)[0];
+            giveBook = this.books.splice(this.books.indexOf(search)-1,1)[0];
         }
        return giveBook;
     }
@@ -98,10 +98,13 @@ class Student {
         this.marks = {};
     }
     addMark(mark, subject) {
-        if (this.marks[subject] === undefined) {
+        if(mark<1 || mark>5){
+            return;
+        }
+        else if (this.marks[subject] === undefined) {
             this.marks[subject] = [mark];
           }
-          else {
+        else {
             this.marks[subject].push(mark);
           }
     }
