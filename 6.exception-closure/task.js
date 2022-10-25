@@ -1,8 +1,7 @@
 function parseCount(str){
     let parsed = Number.parseInt(str, 10);
     if (Number.isNaN(parsed)){
-        const error = new Error("Невалидное значение");
-        throw error;
+        throw new Error("Невалидное значение");
     }
     else return parsed;
 }
@@ -21,16 +20,15 @@ class Triangle{
         this.b = b;
         this.c = c;
 
-        if((this.a+this.b)<this.c || (this.a+this.c)<this.b || (this.b+this.c)<this.a){
-            let error = new Error("Треугольник с такими сторонами не существует");
-            throw error;
+        if((a+b)<c || (a+c)<b || (b+c)<a){
+           throw new Error("Треугольник с такими сторонами не существует");
         }
     }
     getPerimeter(){
         return (this.a + this.b + this.c);
     }
     getArea(){
-        let p = (this.a + this.b + this.c)/2;
+        let p = this.getPerimeter()/2;
         let s = Math.sqrt(p*(p-this.a)*(p-this.b)*(p-this.c));
         s = +s.toFixed(3);
         return s;
