@@ -33,7 +33,7 @@ function debounceDecoratorNew(func, delay) {
     if (!timeoutId) {
       console.log(func(...args), ++wrapper.count);
       console.log("callback called");
-      timeoutId = setTimeout(() => {
+      timeoutId = setTimeout(() => {  
         console.log(func(...args), ++wrapper.count);
         console.log("delayed callback called");
       }, delay);

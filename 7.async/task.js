@@ -21,14 +21,13 @@ class AlarmClock {
         let arr = this.alarmCollection;
         let arrLength = arr.length;
         this.alarmCollection = arr.filter(el => el.id !== actionId);
-        return arrLength > this.alarmCollection;
+        return arrLength > this.alarmCollection.length;
     }
-    getCurrentFormattedTime() {
-        let curTime = new Date().toLocaleTimeString("ru-Ru", {
+    getCurrentFormattedTime() { 
+        return new Date().toLocaleTimeString("ru-Ru", {
             hour: "2-digit",
             minute: "2-digit",
-        })
-        return curTime;
+        });
     }
     start() {
 
