@@ -28,6 +28,7 @@ function debounceDecoratorNew(func, delay){
   return function wrapper(...args){
     if(timeoutId){
       console.log("current timer cleared ", ++allCount);
+      Function.prototype.allCount = allCount;
       clearTimeout(timeoutId);
     }
     console.log("creating new timeout");
@@ -35,6 +36,8 @@ function debounceDecoratorNew(func, delay){
       console.log(func(...args),  ++count, ++allCount);
       console.log("callback called");
     }, delay);
+    Function.prototype.count = count;
+    
    return wrapper;
   }
   

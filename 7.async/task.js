@@ -5,67 +5,45 @@ class AlarmClock {
     }
     addClock(actionTime, actionFunc, actionId) {
         if (typeof actionId === 'undefined') {
-            console.log("here's the problem");
             throw new Error('error text');
         } else if (this.alarmCollection.some((el) => el.id === actionId)) {
             console.error("this id already exists");
             return;
-        } else {
-            this.alarmCollection.push({
-                id: actionId,
-                time: actionTime,
-                callback: actionFunc
-            });
         }
+        this.alarmCollection.push({
+            id: actionId,
+            time: actionTime,
+            callback: actionFunc
+        });
+
     }
     removeClock(actionId) {
         let arr = this.alarmCollection;
-        let index;
-        for (let i = 0; i < arr.length; i++) {
-            if (arr[i].id === actionId) {
-                index = i;
-            }
-        }
-        if (index === "undefined") {
-            return false;
-        } else {
-            this.alarmCollection.splice(index, 1);
-            return true;
-        }
+        let arrLength = arr.length;
+        this.alarmCollection = arr.filter(el => el.id !== actionId);
+        return arrLength > this.alarmCollection;
     }
     getCurrentFormattedTime() {
-        let date = new Date();
-        let hours = date.getHours();
-        if (hours < 10) {
-            hours = ("0" + hours);
-        }
-        let minutes = date.getMinutes();
-        if (minutes < 10) {
-            minutes = ("0" + minutes);
-        }
-        return `${hours}:${minutes}`
+        let curTime = new Date().toLocaleTimeString("ru-Ru", {
+            hour: "2-digit",
+            minute: "2-digit",
+        })
+        return curTime;
     }
     start() {
-       
-       let getTime = this.getCurrentFormattedTime;
-        function parse() {
-            this.alarmCollection.forEach(al => checkClock(al));
-        }
 
-        function checkClock(arg) {
-            
+        let getTime = this.getCurrentFormattedTime;
+        let checkClock = (arg) => {
+
             let now = getTime();
             if (arg.time === now) {
                 arg.callback();
-            } else {
-                console.log("it's not time");
             }
-        }
+        };
+        // checkClock = checkClock.bind(this); // все равно до конца не понимаю, в какой области видимости нужно добавлять это выражение, если использховать не стрелочную функцию? В гобальной?
 
         if (this.timerId === null) {
-            console.log("Id is null");
-            this.timerId = setInterval(() => parse.call(this), 1000);
-            //setTimeout(() => clearInterval(this.timerId), 5000);
+            this.timerId = setInterval(() => this.alarmCollection.forEach(al => checkClock(al)), 1000);
         }
 
     }
